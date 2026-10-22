@@ -1,115 +1,162 @@
-📋 Gerenciador de Tarefas (Java + Swing + PostgreSQL + Docker)
 
-Um sistema desktop completo e intuitivo para gerenciamento de pessoas e atribuição de tarefas dentro de uma empresa. O projeto implementa um CRUD completo onde cada tarefa pode ser vinculada ao ID de um usuário cadastrado.
+# 📋 Gerenciador de Tarefas
 
-🛠️ Tecnologias e Dependências Utilizadas
+Sistema desktop para gerenciamento de pessoas e tarefas, desenvolvido com Java Swing e PostgreSQL. O projeto permite cadastrar pessoas, criar tarefas associadas a usuários e acompanhar seu status.
 
-Linguagem: Java 25
+## 🛠️ Tecnologias utilizadas
 
-Interface Gráfica (GUI): Java Swing (javax.swing) e AWT (java.awt)
+- Java 25
+- Java Swing e AWT
+- PostgreSQL 16
+- JDBC
+- Docker e Docker Compose
+- Apache Maven
 
-Banco de Dados: PostgreSQL 16
+## 🏗️ Arquitetura
 
-Containerização: Docker e Docker Compose
+O projeto utiliza uma organização baseada em Model, View e DAO, separando a interface gráfica, os modelos de dados e as operações de acesso ao banco.
 
-Driver JDBC: Driver oficial do PostgreSQL configurado no pom.xml
+### Estrutura de diretórios
 
-Arquitetura: View - Model - DAO (Data Access Object)
-
-📂 Estrutura de Diretórios do Projeto
-
-gerenciador-tarefas/                 # Pasta raiz do projeto
-├── docker-compose.yml              # Configuração do container PostgreSQL
-├── init.sql                        # Script de criação das tabelas e dados iniciais
-└── gerenciador-tarefas/            # Subpasta do projeto Java (Maven)
+```text
+gerenciador-tarefas/
+├── docker-compose.yml
+├── init.sql
+└── gerenciador-tarefas/
     ├── .gitignore
-    ├── pom.xml                     # Configurações do Maven e dependências
+    ├── pom.xml
     └── src/
-        ├── main/
-        │   └── java/
-        │       └── com/
-        │           └── empresa/
-        │               └── tarefas/
-        │                   ├── config/
-        │                   │   └── FabricaConexao.java  # Gerenciador da conexão JDBC
-        │                   ├── dao/
-        │                   │   ├── PessoaDAO.java       # Operações CRUD de Pessoas
-        │                   │   └── TarefaDAO.java       # Operações CRUD de Tarefas
-        │                   ├── model/
-        │                   │   ├── Pessoa.java          # Record/Modelo de Pessoa
-        │                   │   └── Tarefa.java          # Record/Modelo de Tarefa
-        │                   ├── view/
-        │                   │   ├── JanelaPrincipal.java # Janela base com as abas
-        │                   │   ├── PainelPessoas.java   # Formulário e tabela de Pessoas
-        │                   │   └── PainelTarefas.java   # Formulário, filtro e ações de Tarefas
-        │                   └── Main.java                # Ponto de entrada (Main Class)
-        └── resources/
+        └── main/
+            ├── java/
+            │   └── com/
+            │       └── empresa/
+            │           └── tarefas/
+            │               ├── config/
+            │               │   └── FabricaConexao.java
+            │               ├── dao/
+            │               │   ├── PessoaDAO.java
+            │               │   └── TarefaDAO.java
+            │               ├── model/
+            │               │   ├── Pessoa.java
+            │               │   └── Tarefa.java
+            │               ├── view/
+            │               │   ├── JanelaPrincipal.java
+            │               │   ├── PainelPessoas.java
+            │               │   └── PainelTarefas.java
+            │               └── Main.java
+            └── resources/
+```
 
+## ✨ Funcionalidades
 
-🚀 Como Rodar o Projeto
+### 👥 Gerenciamento de pessoas
 
-1. Pré-requisitos
+- Cadastro de pessoas com nome e e-mail.
+- Listagem de pessoas cadastradas.
+- Exibição do ID de cada pessoa.
 
-JDK 25 (ou JDK 17+)
+### 📝 Gerenciamento de tarefas
 
-Docker e Docker Compose
+- Cadastro de tarefas com título, descrição e ID da pessoa responsável.
+- Listagem das tarefas cadastradas.
+- Filtro de tarefas por ID da pessoa responsável.
+- Marcação de tarefas como concluídas.
+- Exclusão de tarefas selecionadas.
 
-Git
+## 📋 Pré-requisitos
 
-2. Passo a Passo
+Antes de executar o projeto, instale:
 
-1️⃣ Subir o banco de dados no Docker
+- [JDK 25](https://jdk.java.net/25/)
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
+- [Apache Maven](https://maven.apache.org/) (para execução via terminal)
 
-Na raiz do projeto (onde estão os arquivos docker-compose.yml e init.sql), execute no terminal:
+## 🚀 Como executar
 
-docker-compose up -d
+### 1. Clone o repositório
 
+```bash
+git clone https://github.com/arthur-selvano/gerenciador-tarefas-java
+```
 
-O script init.sql criará as tabelas pessoas e tarefas automaticamente no container PostgreSQL.
+Entre na pasta raiz do projeto:
 
-2️⃣ Executar a aplicação Java
-
-Opção A: Via IDE (IntelliJ IDEA / Eclipse)
-
-Abra a pasta gerenciador-tarefas/gerenciador-tarefas na sua IDE.
-
-Aguarde a sincronização automática do Maven (pom.xml).
-
-Localize o arquivo src/main/java/com/empresa/tarefas/Main.java e execute a classe (Run).
-
-Opção B: Via Terminal com Maven
-
-Navegue até a pasta interna do projeto Java e execute:
-
+```bash
 cd gerenciador-tarefas
+```
+
+### 2. Inicie o banco de dados
+
+Na pasta que contém o arquivo `docker-compose.yml`, execute:
+
+```bash
+docker compose up -d
+```
+
+O PostgreSQL será iniciado em um container Docker. O arquivo `init.sql` contém o script de inicialização das tabelas e dos dados iniciais.
+
+Para verificar o estado do container:
+
+```bash
+docker compose ps
+```
+
+### 3. Execute a aplicação
+
+#### Opção A — Pela IDE
+
+1. Abra a pasta `gerenciador-tarefas/gerenciador-tarefas` no IntelliJ IDEA ou Eclipse.
+2. Aguarde o Maven carregar as dependências.
+3. Abra `src/main/java/com/empresa/tarefas/Main.java`.
+4. Execute a classe `Main`.
+
+#### Opção B — Pelo terminal
+
+Entre na pasta interna do projeto Java:
+
+```bash
+cd gerenciador-tarefas
+```
+
+Compile e execute a aplicação:
+
+```bash
 mvn compile exec:java -Dexec.mainClass="com.empresa.tarefas.Main"
+```
 
+Essa opção requer que o `pom.xml` esteja configurado com o plugin Maven Exec.
 
-Opção C: Compilação Manual via Terminal (Java CLI)
+## 🗄️ Banco de dados
 
-cd gerenciador-tarefas
+A aplicação utiliza PostgreSQL 16. A conexão é gerenciada pela classe `FabricaConexao.java`, que utiliza JDBC para realizar as operações no banco.
 
-# Compilar todas as classes do projeto
-javac -d target/classes -cp "src/main/java" src/main/java/com/empresa/tarefas/*.java src/main/java/com/empresa/tarefas/*/*.java
+Verifique se as configurações de conexão da aplicação correspondem às definidas no `docker-compose.yml`, incluindo host, porta, banco de dados, usuário e senha.
 
-# Executar a aplicação
-java -cp target/classes com.empresa.tarefas.Main
+## 🛑 Encerrando o ambiente
 
+Para parar os containers:
 
-💻 Funcionalidades do Sistema
+```bash
+docker compose down
+```
 
-Aba Pessoas:
+Para remover os containers e também os volumes associados:
 
-Cadastrar nova pessoa informando Nome e Email.
+```bash
+docker compose down -v
+```
 
-Listar todas as pessoas cadastradas na tabela exibindo o ID gerado.
+**Atenção:** o segundo comando pode apagar permanentemente os dados persistidos no banco de dados.
 
-Aba Tarefas:
+## 📌 Próximas melhorias
 
-Cadastrar nova tarefa informando Título, Descrição e ID da Pessoa responsável.
+- Implementação de testes automatizados.
+- Validação dos dados informados nos formulários.
+- Melhorias no tratamento de exceções.
+- Externalização das configurações de conexão com o banco de dados.
+- Aprimoramento da interface gráfica.
 
-Filtrar a lista de tarefas por ID de usuário.
+## 👨‍💻 Objetivo
 
-Marcar tarefas selecionadas como Concluídas.
-
-Deletar tarefas selecionadas da tabela e do banco de dados.
+Projeto desenvolvido para praticar Java, programação orientada a objetos, interfaces gráficas, persistência de dados com PostgreSQL e utilização de Docker em um ambiente de desenvolvimento.
