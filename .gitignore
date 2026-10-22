@@ -1,10 +1,19 @@
+# === Compilação e Build (Java / Maven / Gradle) ===
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+*.class
+*.jar
+*.war
+*.ear
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
 .kotlin
 
-### IntelliJ IDEA ###
+# === IntelliJ IDEA ===
+.idea/
 .idea/modules.xml
 .idea/jarRepositories.xml
 .idea/compiler.xml
@@ -12,8 +21,9 @@ target/
 *.iws
 *.iml
 *.ipr
+out/
 
-### Eclipse ###
+# === Eclipse ===
 .apt_generated
 .classpath
 .factorypath
@@ -22,18 +32,20 @@ target/
 .springBeans
 .sts4-cache
 
-### NetBeans ###
+# === NetBeans ===
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
-### VS Code ###
+# === VS Code ===
 .vscode/
 
-### Mac OS ###
+# === Mac OS & Sistema ===
 .DS_Store
+*.log
+Thumbs.db
+
+# === Docker & Dados Locais ===
+pgdata/
