@@ -1,0 +1,3 @@
+package com.empresa.tarefas.model;
+
+public record Pessoa(Integer id, String nome, String email) {}
