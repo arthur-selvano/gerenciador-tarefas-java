@@ -13,6 +13,8 @@ public class PainelPessoas extends JPanel {
 
     private JTextField txtNome;
     private JTextField txtEmail;
+    private JTextField txtSenha;
+    private JCheckBox chkAdmin;
 
     private JTable tabela;
     private DefaultTableModel modelTabela;
@@ -20,7 +22,7 @@ public class PainelPessoas extends JPanel {
     public PainelPessoas() {
         setLayout(new BorderLayout(10, 10));
 
-        JPanel form = new JPanel(new GridLayout(3, 2, 5, 5));
+        JPanel form = new JPanel(new GridLayout(5, 3, 5, 5));
         form.setBorder(BorderFactory.createTitledBorder("Cadastrar pessoa"));
 
         form.add(new JLabel("Nome: "));
@@ -31,13 +33,21 @@ public class PainelPessoas extends JPanel {
         txtEmail = new JTextField();
         form.add(txtEmail);
 
+        form.add(new JLabel("Senha: "));
+        txtSenha = new JTextField();
+        form.add(txtSenha);
+
+        form.add(new JLabel("Admin: "));
+        chkAdmin = new JCheckBox();
+        form.add(chkAdmin);
+
         JButton btnSalvar = new JButton("Salvar");
         btnSalvar.addActionListener(e -> salvar());
         form.add(btnSalvar);
 
         add(form, BorderLayout.NORTH);
 
-        modelTabela = new DefaultTableModel(new String[]{"ID", "Nome", "Email"}, 0);
+        modelTabela = new DefaultTableModel(new String[]{"ID", "Nome", "Email", "Admin"}, 0);
         tabela = new JTable(modelTabela);
         add(new JScrollPane(tabela), BorderLayout.CENTER);
 
@@ -47,15 +57,20 @@ public class PainelPessoas extends JPanel {
     private void salvar() {
         String nome = txtNome.getText().trim();
         String email = txtEmail.getText().trim();
+        String senha = txtSenha.getText().trim();
+        boolean isAdmin = chkAdmin.isSelected();
 
-        if (nome.isEmpty() || email.isEmpty()) {
+        if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Preencha todos os campos!", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        pessoaDAO.salvar(new Pessoa(null, nome, email));
+        pessoaDAO.salvar(new Pessoa(null, nome, email, senha, isAdmin));
         txtNome.setText("");
         txtEmail.setText("");
+        txtSenha.setText("");
+        chkAdmin.isSelected();
+
         atualizarTabela();
     }
 
@@ -63,7 +78,7 @@ public class PainelPessoas extends JPanel {
         modelTabela.setRowCount(0);
 
         for(Pessoa p : pessoaDAO.listarTodas()) {
-            modelTabela.addRow(new Object[]{p.id(), p.nome(), p.email()});
+            modelTabela.addRow(new Object[]{p.id(), p.nome(), p.email(), p.isAdmin()});
         }
     }
 }
