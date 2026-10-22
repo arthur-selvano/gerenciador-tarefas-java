@@ -5,7 +5,7 @@ import javax.swing.*;
 public class JanelaPrincipal extends JFrame {
 
     public JanelaPrincipal() {
-        setTitle("Gerenciador de Tarefas - Empresa");
+        setTitle("Gerenciador de Tarefas");
         setSize(750, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);

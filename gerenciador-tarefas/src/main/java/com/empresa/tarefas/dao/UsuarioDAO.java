@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class UsuarioDAO {
 
     public boolean autenticar(String login, String senha) {
-        String sql = "SELECT * FROM usuarios WHERE login = ? AND senha = ?";
+        String sql = "SELECT * FROM pessoas WHERE email = ? AND senha = ?";
 
         try (Connection conn = FabricaConexao.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
