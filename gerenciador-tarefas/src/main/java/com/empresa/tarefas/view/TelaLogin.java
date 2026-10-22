@@ -53,7 +53,7 @@ public class TelaLogin extends JFrame {
         if (autenticado) {
             JOptionPane.showMessageDialog(this, "Login realizado com sucesso!");
 
-            JanelaPrincipal janelaPrincipal = new JanelaPrincipal();
+            JanelaPrincipal janelaPrincipal = new JanelaPrincipal(usuario);
             janelaPrincipal.setVisible(true);
 
             this.dispose();

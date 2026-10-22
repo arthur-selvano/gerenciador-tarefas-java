@@ -18,7 +18,6 @@ public class PainelTarefas extends JPanel {
     public PainelTarefas() {
         setLayout(new BorderLayout(10, 10));
 
-        // 1. Formulário (Topo)
         JPanel form = new JPanel(new GridLayout(4, 2, 5, 5));
         form.setBorder(BorderFactory.createTitledBorder("Cadastrar Tarefa"));
 
@@ -40,7 +39,6 @@ public class PainelTarefas extends JPanel {
 
         add(form, BorderLayout.NORTH);
 
-        // 2. Tabela + Filtro (Centro)
         JPanel centerPanel = new JPanel(new BorderLayout(5, 5));
 
         JPanel filterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -58,7 +56,6 @@ public class PainelTarefas extends JPanel {
         tabela = new JTable(modelTabela);
         centerPanel.add(new JScrollPane(tabela), BorderLayout.CENTER);
 
-        // Botões de ação (Inferior)
         JPanel actionsPanel = new JPanel();
         JButton btnConcluir = new JButton("Concluir");
         btnConcluir.addActionListener(e -> concluir());

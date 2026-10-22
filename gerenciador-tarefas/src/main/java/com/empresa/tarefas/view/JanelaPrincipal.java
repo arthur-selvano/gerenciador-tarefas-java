@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class JanelaPrincipal extends JFrame {
 
-    public JanelaPrincipal() {
+    public JanelaPrincipal(String nomeUsuario) {
         setTitle("Gerenciador de Tarefas");
         setSize(750, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -16,7 +16,16 @@ public class JanelaPrincipal extends JFrame {
 
         itemSair.addActionListener(e -> efectuarLogout());
         menuSessao.add(itemSair);
+
+        JMenu menuUsuario = new JMenu("Olá, " + nomeUsuario);
+        menuUsuario.setEnabled(false);
+        menuUsuario.putClientProperty("FlatLaf.style", "disabledForeground: $menu.foreground; font: font.bold");
+
+        barraMenu.add(javax.swing.Box.createHorizontalGlue());
+
+        barraMenu.add(menuUsuario);
         barraMenu.add(menuSessao);
+
         setJMenuBar(barraMenu);
 
         JTabbedPane abas = new JTabbedPane();
