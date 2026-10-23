@@ -1,7 +1,9 @@
 package com.empresa.tarefas.view;
 
 import com.empresa.tarefas.dao.TarefaDAO;
+import com.empresa.tarefas.model.Pessoa;
 import com.empresa.tarefas.model.Tarefa;
+import com.empresa.tarefas.dao.PessoaDAO;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -10,8 +12,10 @@ import java.awt.*;
 public class PainelTarefas extends JPanel {
 
     private final TarefaDAO tarefaDAO = new TarefaDAO();
+    private final PessoaDAO pessoaDAO = new PessoaDAO();
 
-    private JTextField txtTitulo, txtDescricao, txtPessoaId, txtFiltroPessoaId;
+    private JTextField txtTitulo, txtDescricao, txtPessoaId;
+    private JComboBox<Pessoa> comboBox;
     private JTable tabela;
     private DefaultTableModel modelTabela;
 
@@ -42,13 +46,17 @@ public class PainelTarefas extends JPanel {
         JPanel centerPanel = new JPanel(new BorderLayout(5, 5));
 
         JPanel filterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        filterPanel.add(new JLabel("Filtrar por ID Pessoa:"));
-        txtFiltroPessoaId = new JTextField(5);
-        filterPanel.add(txtFiltroPessoaId);
+        filterPanel.add(new JLabel("Filtrar por Pessoa:"));
 
-        JButton btnBuscar = new JButton("Buscar");
-        btnBuscar.addActionListener(e -> filtrar());
-        filterPanel.add(btnBuscar);
+        DefaultComboBoxModel<Pessoa> model = new DefaultComboBoxModel<>();
+        for(Pessoa p : pessoaDAO.listarTodas()) {
+            model.addElement(p);
+        }
+
+        comboBox = new JComboBox<>(model);
+        filterPanel.add(comboBox);
+
+        comboBox.addActionListener(e -> filtrar());
 
         centerPanel.add(filterPanel, BorderLayout.NORTH);
 
@@ -93,11 +101,9 @@ public class PainelTarefas extends JPanel {
     }
 
     private void filtrar() {
-        try {
-            int pessoaId = Integer.parseInt(txtFiltroPessoaId.getText().trim());
-            atualizarTabela(pessoaId);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Informe um ID numérico!", "Aviso", JOptionPane.WARNING_MESSAGE);
+        Pessoa pessoaSelecionada = (Pessoa) comboBox.getSelectedItem();
+        if (pessoaSelecionada != null) {
+            atualizarTabela(pessoaSelecionada.id());
         }
     }
 
