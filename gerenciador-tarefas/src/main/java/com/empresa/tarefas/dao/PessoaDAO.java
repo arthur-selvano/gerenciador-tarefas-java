@@ -48,4 +48,16 @@ public class PessoaDAO {
         }
         return lista;
     }
+
+    public void deletar(int id) {
+        String sql = "DELETE FROM pessoas WHERE id = ?";
+        try (Connection conn = FabricaConexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+            System.out.println("Pessoa deletada com sucesso!");
+        } catch (SQLException e) {
+            System.err.println("Erro ao deletar pessoa: " + e.getMessage());
+        }
+    }
 }

@@ -45,6 +45,10 @@ public class PainelPessoas extends JPanel {
         btnSalvar.addActionListener(e -> salvar());
         form.add(btnSalvar);
 
+        JButton btnDeletar = new JButton("Deletar");
+        btnDeletar.addActionListener(e -> deletar());
+        form.add(btnDeletar);
+
         add(form, BorderLayout.NORTH);
 
         modelTabela = new DefaultTableModel(new String[]{"ID", "Nome", "Email", "Admin"}, 0);
@@ -79,6 +83,16 @@ public class PainelPessoas extends JPanel {
 
         for(Pessoa p : pessoaDAO.listarTodas()) {
             modelTabela.addRow(new Object[]{p.id(), p.nome(), p.email(), p.isAdmin()});
+        }
+    }
+
+
+    private void deletar() {
+        int row = tabela.getSelectedRow();
+        if (row >= 0) {
+            int id = (int) modelTabela.getValueAt(row, 0);
+            pessoaDAO.deletar(id);
+            atualizarTabela();
         }
     }
 }
