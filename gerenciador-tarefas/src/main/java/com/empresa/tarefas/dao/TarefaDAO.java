@@ -10,12 +10,13 @@ import java.util.List;
 public class TarefaDAO {
 
     public void salvar(Tarefa t) {
-        String sql = "INSERT INTO tarefas (titulo, descricao, pessoa_id) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO tarefas (titulo, descricao, pessoa_id, categoria) VALUES (?, ?, ?, ?)";
         try (Connection conn = FabricaConexao.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, t.titulo());
             stmt.setString(2, t.descricao());
             stmt.setInt(3, t.pessoaId());
+            stmt.setString(4, t.categoria());
             stmt.executeUpdate();
             System.out.println("Tarefa cadastrada com sucesso!");
         } catch (SQLException e) {
@@ -36,7 +37,8 @@ public class TarefaDAO {
                         rs.getString("titulo"),
                         rs.getString("descricao"),
                         rs.getBoolean("concluida"),
-                        rs.getInt("pessoa_id")
+                        rs.getInt("pessoa_id"),
+                        rs.getString("categoria")
                 ));
             }
         } catch (SQLException e) {

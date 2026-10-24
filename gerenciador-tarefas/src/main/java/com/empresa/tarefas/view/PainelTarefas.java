@@ -14,7 +14,7 @@ public class PainelTarefas extends JPanel {
     private final TarefaDAO tarefaDAO = new TarefaDAO();
     private final PessoaDAO pessoaDAO = new PessoaDAO();
 
-    private JTextField txtTitulo, txtDescricao, txtPessoaId;
+    private JTextField txtTitulo, txtDescricao, txtPessoaId, txtCategoria;
     private JComboBox<Pessoa> comboBox;
     private JTable tabela;
     private DefaultTableModel modelTabela;
@@ -22,7 +22,7 @@ public class PainelTarefas extends JPanel {
     public PainelTarefas() {
         setLayout(new BorderLayout(10, 20));
 
-        JPanel form = new JPanel(new GridLayout(4, 2, 5, 5));
+        JPanel form = new JPanel(new GridLayout(5, 2, 5, 5));
         form.setBorder(BorderFactory.createTitledBorder("Cadastrar Tarefa"));
 
         form.add(new JLabel("Título:"));
@@ -32,6 +32,10 @@ public class PainelTarefas extends JPanel {
         form.add(new JLabel("Descrição:"));
         txtDescricao = new JTextField();
         form.add(txtDescricao);
+
+        form.add(new JLabel("Categoria:"));
+        txtCategoria = new JTextField();
+        form.add(txtCategoria);
 
         form.add(new JLabel("ID da Pessoa:"));
         txtPessoaId = new JTextField();
@@ -83,6 +87,7 @@ public class PainelTarefas extends JPanel {
         try {
             String titulo = txtTitulo.getText().trim();
             String desc = txtDescricao.getText().trim();
+            String categoria = txtCategoria.getText().trim();
             int pessoaId = Integer.parseInt(txtPessoaId.getText().trim());
 
             if (titulo.isEmpty()) {
@@ -90,10 +95,11 @@ public class PainelTarefas extends JPanel {
                 return;
             }
 
-            tarefaDAO.salvar(new Tarefa(null, titulo, desc, false, pessoaId));
+            tarefaDAO.salvar(new Tarefa(null, titulo, desc, false, pessoaId, categoria));
             txtTitulo.setText("");
             txtDescricao.setText("");
             txtPessoaId.setText("");
+            txtCategoria.setText("");
 
             atualizarTabela(pessoaId);
         } catch (NumberFormatException e) {
