@@ -20,7 +20,7 @@ public class PainelTarefas extends JPanel {
     private DefaultTableModel modelTabela;
 
     public PainelTarefas() {
-        setLayout(new BorderLayout(10, 10));
+        setLayout(new BorderLayout(10, 20));
 
         JPanel form = new JPanel(new GridLayout(4, 2, 5, 5));
         form.setBorder(BorderFactory.createTitledBorder("Cadastrar Tarefa"));
@@ -54,6 +54,7 @@ public class PainelTarefas extends JPanel {
         }
 
         comboBox = new JComboBox<>(model);
+        comboBox.setPreferredSize(new Dimension(400, 40));
         filterPanel.add(comboBox);
 
         comboBox.addActionListener(e -> filtrar());
